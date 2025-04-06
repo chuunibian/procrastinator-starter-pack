@@ -8,6 +8,7 @@ from typing import List
 import google.generativeai as genAI
 from dotenv import load_dotenv
 from app.models import GeminiResponse, FileResult, DebugInternal
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv() # Get all env var from .env
 
@@ -18,6 +19,14 @@ model = genAI.GenerativeModel('gemini-2.0-flash')
 processed_pdf = {}
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (for development); change this in production!
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 
 @app.get("/")
@@ -66,7 +75,7 @@ async def upload_pdfs(files: List[UploadFile] = File(...)):
     gemini_input = aggregatePdfFiles(processed_pdf)
 
 
-    prompt = f"Analyze these lecture materials and provide some topics or keywords that are most likely on the exam but only provide 10 words not long paragraphs: {gemini_input}"
+    prompt = f"Analyze these lecture materials and provide some topics or keywords that are most likely on the exam in the form of perfectly comma separateable: {gemini_input}"
 
     # Later learn how to do try catch stuff and add httpexception stuff
     # TODO This is not async
@@ -76,7 +85,7 @@ async def upload_pdfs(files: List[UploadFile] = File(...)):
         total_files=len(files),
         processed_files=results,
         aggregated_response=gemini_input,
-        gemini_response=response.text
+        gemini_response=response.text.split(",")
     )
 
 

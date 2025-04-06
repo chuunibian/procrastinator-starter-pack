@@ -17,7 +17,7 @@ class GeminiResponse(BaseModel):
     total_files: int
     processed_files: List[FileResult]
     aggregated_response: str
-    gemini_response: str
+    gemini_response: List[str]
 
 
 class DebugInternal(BaseModel):

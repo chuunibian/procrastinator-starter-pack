@@ -7,12 +7,24 @@ interface Props{
 
 }
 
+interface FileResult {
+    pdf_id: string;
+    filename: string;
+    status: 'success' | 'error';
+    message: string;
+}
+
+interface GeminiResponse {
+    total_files: number;
+    processed_files: FileResult[];
+    aggregated_response: string;
+    gemini_response: string;
+}
+
 function FileUploader(prop: Props){
     const [files, setFiles] = useState<File[]>([]);
     const [selectedFileState, setSelectedFileState] = useState(0);
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-    const [responseData, setResponseData] = useState<any>(null); // State for the file?
-
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -28,20 +40,16 @@ function FileUploader(prop: Props){
           formData.append('files', file);
         });
         try {
-            const response = await fetch('/upload_pdf', {
+            const response = await fetch('http://127.0.0.1:8000/upload_pdfs', {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
             });
 
-            const response_data = await response.json();
+            const response_data: GeminiResponse = await response.json();
 
-            setResponseData(response_data); // set api response to useState
             setUploadStatus('success');
 
-            prop.onResponseReceived(responseData) // Set call back this will call a usestate local to parent and set the data to something
+            prop.onResponseReceived(response_data) // Set call back this will call a usestate local to parent and set the data to something
         } catch (error) {
             console.log("Error while uploading files")
         }
