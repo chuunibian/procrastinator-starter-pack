@@ -33,17 +33,6 @@ function NoResults() {
 }
 
 function ShowResults(prop: Props) {
-  // Placeholder data to simulate Gemini API response
-  const placeholderTerms = [
-    { term: "Photosynthesis", confidence: 0.94 },
-    { term: "Cellular Respiration", confidence: 0.89 },
-    { term: "Mitochondria", confidence: 0.85 },
-    { term: "DNA Replication", confidence: 0.82 },
-    { term: "Protein Synthesis", confidence: 0.78 },
-    { term: "Meiosis", confidence: 0.76 },
-    { term: "Genetic Inheritance", confidence: 0.73 },
-    { term: "Ecosystem Dynamics", confidence: 0.69 }
-  ];
 
   return (
     <div className="bg-gradient-to-br from-indigo-200 to-indigo-100 rounded-3xl shadow-xl p-6 border border-indigo-900 h-full min-h-96">
