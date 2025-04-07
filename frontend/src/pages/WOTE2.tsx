@@ -8,7 +8,6 @@ function WOTE2() {
         <p>Test2</p>
         <p>Test2</p>
         <p>Test2</p>
-        <p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p><p>Test2</p>
         </>
 
 
