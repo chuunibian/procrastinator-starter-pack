@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 #Venv
-venv
+venv/
